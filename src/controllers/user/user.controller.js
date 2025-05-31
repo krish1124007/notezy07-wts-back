@@ -146,9 +146,41 @@ const verifyOTP = asyncHandler(async (req, res) => {
 
 })
 
+const findUser = asyncHandler(async(req,res)=>{
+  const {email} = req.body;
+  const final_mail = null
+  if(email.includes('@gmail.com'))
+  {
+    final_mail = email
+  }
+  else{
+    final_mail = email + '@gmail.com'
+  }
+  if(!email){
+    return res.status(400)
+    .json(
+      new apiResponse(401,"please enter the email" , {success:false , data:"please enter the email"})
+    )
+  }
+
+  const find_user = await User.findOne({emailId:final_mail})
+  if(!find_user)
+  {
+    return res.status(200)
+    .json(
+      new apiResponse(201 , "user is not found" , {success:true , data:"user is not found"})
+    )
+  }
+
+  return res.status(200)
+  .json(
+    new apiResponse(201 , "user is found successfully" , {success:true , data:find_user})
+  )
+})
 
 export { 
   signup,
-  verifyOTP
+  verifyOTP,
+  findUser
 
 }
