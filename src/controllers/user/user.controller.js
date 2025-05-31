@@ -148,7 +148,7 @@ const verifyOTP = asyncHandler(async (req, res) => {
 
 const findUser = asyncHandler(async(req,res)=>{
   const {email} = req.body;
-  const final_mail = null
+  let final_mail = null
   if(email.includes('@gmail.com'))
   {
     final_mail = email
